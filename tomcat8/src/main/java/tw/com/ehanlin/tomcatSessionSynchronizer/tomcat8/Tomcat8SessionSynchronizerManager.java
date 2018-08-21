@@ -19,6 +19,11 @@ public class Tomcat8SessionSynchronizerManager extends ManagerBase {
         return this._synchronizer;
     }
 
+    public Tomcat8SessionSynchronizerManager(Synchronizer synchronizer) {
+        super();
+        this._synchronizer = synchronizer;
+    }
+
     @Override
     protected void initInternal() throws LifecycleException {
         super.initInternal();
