@@ -4,7 +4,6 @@ import tw.com.ehanlin.tomcatSessionSynchronizer.core.SynchronizableSession;
 import tw.com.ehanlin.tomcatSessionSynchronizer.core.Synchronizer;
 
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class MemorySynchronizer implements Synchronizer {
