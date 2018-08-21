@@ -16,7 +16,7 @@ public class MemorySynchronizer implements Synchronizer {
             _storage.put(id, new SynchronizableSession(id));
         }
         if(_storage.containsKey(id)){
-            return _storage.get(id);
+            return _storage.get(id).clone();
         }else{
             return null;
         }
@@ -24,16 +24,17 @@ public class MemorySynchronizer implements Synchronizer {
 
     @Override
     public void save(SynchronizableSession session) {
-        _storage.put(session.getId(), session);
+        _storage.put(session.getId(), session.clone());
     }
 
     @Override
     public void saveOneAttribute(SynchronizableSession session, String attribute) {
-        SynchronizableSession storageSession = load(session.getId(), true);
+        SynchronizableSession storageSession = load(session.getId(), true).clone();
         if(session.hasAttribute(attribute)){
             storageSession.setAttribute(attribute, session.getAttribute(attribute));
         }else{
             storageSession.unsetAttribute(attribute);
         }
+        save(storageSession);
     }
 }
