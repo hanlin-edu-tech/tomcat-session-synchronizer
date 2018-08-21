@@ -1,6 +1,6 @@
 package tw.com.ehanlin.tomcatSessionSynchronizer.core;
 
-public abstract interface Synchronizer {
+public interface Synchronizer {
 
     SynchronizableSession load(String id, boolean createIfNotExist);
 

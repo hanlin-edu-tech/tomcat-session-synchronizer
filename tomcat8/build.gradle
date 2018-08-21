@@ -1,0 +1,4 @@
+dependencies {
+    implementation project(":core")
+    implementation 'org.apache.tomcat:tomcat-catalina:8.5.31'
+}

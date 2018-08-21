@@ -3,4 +3,5 @@ rootProject.name = 'tomcat-session-synchronizer'
 include 'core'
 include 'memory'
 include 'mongodb'
+include 'tomcat8'
 
