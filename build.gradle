@@ -1,9 +1,22 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+    }
+}
+
 subprojects{
+
     group 'tw.com.ehanlin'
-    version '1.0.0-SNAPSHOT'
+    version '0.0.1'
 
     apply plugin: 'java'
     apply plugin: 'idea'
+    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
+    apply plugin: 'com.jfrog.bintray'
 
     sourceCompatibility = 1.8
 
@@ -14,4 +27,31 @@ subprojects{
     dependencies {
         testCompile group: 'junit', name: 'junit', version: '4.12'
     }
+
+
+    publishing {
+        publications {
+            ehanlinMaven(MavenPublication) {
+                from components.java
+                groupId 'tw.com.ehanlin'
+                artifactId "tomcat-session-synchronizer-${project.name}"
+                version "$version"
+            }
+        }
+    }
+
+    bintray {
+        user = System.getenv('BINTRAY_USER')
+        key = System.getenv('BINTRAY_KEY')
+        publish = true
+        publications = ['ehanlinMaven']
+        pkg {
+            repo = "maven"
+            name = "tomcat-session-synchronizer-${project.name}"
+            vcsUrl = "https://github.com/hanlin-edu-tech/tomcat-session-synchronizer.git"
+            licenses = ["MIT"]
+            publicDownloadNumbers = true
+        }
+    }
+
 }
