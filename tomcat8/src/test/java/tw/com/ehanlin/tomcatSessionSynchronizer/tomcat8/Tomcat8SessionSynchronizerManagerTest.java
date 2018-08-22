@@ -11,6 +11,7 @@ import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.junit.Test;
@@ -37,7 +38,7 @@ public class Tomcat8SessionSynchronizerManagerTest {
         MemorySynchronizer synchronizer = new MemorySynchronizer();
         Tomcat8SessionSynchronizerManager manager = new Tomcat8SessionSynchronizerManager(synchronizer);
 
-        Context ctx = tomcat.addContext("/", new File(".").getAbsolutePath());
+        Context ctx = tomcat.addContext("", new File(".").getAbsolutePath());
         ctx.setSessionTimeout(10);
         ctx.setSessionCookiePath("/");
         ctx.setManager(manager);
@@ -91,7 +92,7 @@ public class Tomcat8SessionSynchronizerManagerTest {
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpClientContext context = HttpClientContext.create();
 
-        try(CloseableHttpResponse res = httpclient.execute(new HttpGet("localhost:28080/id"), context)){
+        try(CloseableHttpResponse res = httpclient.execute(new HttpGet("http://127.0.0.1:28080/id"), context)){
             if(res.getStatusLine().getStatusCode() != HttpStatus.SC_OK){
                 throw new RuntimeException(Integer.toString(res.getStatusLine().getStatusCode()));
             }
@@ -101,35 +102,35 @@ public class Tomcat8SessionSynchronizerManagerTest {
                     cookieSessionId = cookie.getValue();
                 }
             }
-            assertEquals(res.getEntity().toString(), cookieSessionId);
+            assertEquals(EntityUtils.toString(res.getEntity(), "UTF-8"), cookieSessionId);
         }
 
-        try(CloseableHttpResponse res = httpclient.execute(new HttpGet("localhost:28080/set?a=a&b=b"), context)){
+        try(CloseableHttpResponse res = httpclient.execute(new HttpGet("http://127.0.0.1:28080/set?a=a&b=b"), context)){
             if(res.getStatusLine().getStatusCode() != HttpStatus.SC_OK){
                 throw new RuntimeException(Integer.toString(res.getStatusLine().getStatusCode()));
             }
-            assertEquals(res.getEntity().toString(), "true");
+            assertEquals(EntityUtils.toString(res.getEntity(), "UTF-8"), "true");
         }
 
-        try(CloseableHttpResponse res = httpclient.execute(new HttpGet("localhost:28080/info"), context)){
+        try(CloseableHttpResponse res = httpclient.execute(new HttpGet("http://127.0.0.1:28080/info"), context)){
             if(res.getStatusLine().getStatusCode() != HttpStatus.SC_OK){
                 throw new RuntimeException(Integer.toString(res.getStatusLine().getStatusCode()));
             }
-            assertEquals(res.getEntity().toString(), "a:a\nb:b\n");
+            assertEquals(EntityUtils.toString(res.getEntity(), "UTF-8"), "a:a\nb:b\n");
         }
 
-        try(CloseableHttpResponse res = httpclient.execute(new HttpGet("localhost:28080/unset?a=a"), context)){
+        try(CloseableHttpResponse res = httpclient.execute(new HttpGet("http://127.0.0.1:28080/unset?a=a"), context)){
             if(res.getStatusLine().getStatusCode() != HttpStatus.SC_OK){
                 throw new RuntimeException(Integer.toString(res.getStatusLine().getStatusCode()));
             }
-            assertEquals(res.getEntity().toString(), "true");
+            assertEquals(EntityUtils.toString(res.getEntity(), "UTF-8"), "true");
         }
 
-        try(CloseableHttpResponse res = httpclient.execute(new HttpGet("localhost:28080/info"), context)){
+        try(CloseableHttpResponse res = httpclient.execute(new HttpGet("http://127.0.0.1:28080/info"), context)){
             if(res.getStatusLine().getStatusCode() != HttpStatus.SC_OK){
                 throw new RuntimeException(Integer.toString(res.getStatusLine().getStatusCode()));
             }
-            assertEquals(res.getEntity().toString(), "a:a\n");
+            assertEquals(EntityUtils.toString(res.getEntity(), "UTF-8"), "b:b\n");
         }
 
         try{
