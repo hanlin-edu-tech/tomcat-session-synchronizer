@@ -4,6 +4,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.FindOneAndUpdateOptions;
+import com.mongodb.client.model.ReturnDocument;
 import com.mongodb.client.model.UpdateOptions;
 import org.bson.Document;
 import tw.com.ehanlin.tomcatSessionSynchronizer.core.SynchronizableSession;
@@ -19,7 +20,7 @@ public class MongodbSynchronizer implements Synchronizer {
     private static final String CREATE_DATE = "_createDate";
     private static final String LAST_UPDATE_DATE = "_lastUpdateDate";
 
-    private static final FindOneAndUpdateOptions findUpsertOptions = new FindOneAndUpdateOptions().upsert(true);
+    private static final FindOneAndUpdateOptions findUpsertOptions = new FindOneAndUpdateOptions().upsert(true).returnDocument(ReturnDocument.AFTER);
     private static final UpdateOptions upsertOptions = new UpdateOptions().upsert(true);
 
     private static final Pattern systemKeyPattern = Pattern.compile("^_.*");
