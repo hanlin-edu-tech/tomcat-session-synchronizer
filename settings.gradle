@@ -4,4 +4,5 @@ include 'core'
 include 'memory'
 include 'mongodb'
 include 'tomcat8'
+include 'micronaut'
 
