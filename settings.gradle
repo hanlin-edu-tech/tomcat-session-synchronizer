@@ -1,3 +1,17 @@
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == 'io.quarkus') {
+                useModule("io.quarkus:quarkus-gradle-plugin:${quarkusVersion}")
+            }
+        }
+    }
+}
+
 rootProject.name = 'tomcat-session-synchronizer'
 
 include 'core'
@@ -5,4 +19,5 @@ include 'memory'
 include 'mongodb'
 include 'tomcat8'
 include 'micronaut'
+include 'quarkus'
 
