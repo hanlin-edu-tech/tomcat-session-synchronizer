@@ -27,7 +27,7 @@ public class MicronautSessionStoreSynchronizer extends InMemorySessionStore {
     }
 
 
-    private MicronautSessionStoreSynchronizer(
+    public MicronautSessionStoreSynchronizer(
             SessionIdGenerator sessionIdGenerator,
             SessionConfiguration sessionConfiguration,
             ApplicationEventPublisher eventPublisher,
