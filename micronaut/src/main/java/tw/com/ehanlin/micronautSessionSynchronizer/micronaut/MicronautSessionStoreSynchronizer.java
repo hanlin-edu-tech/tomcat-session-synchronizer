@@ -9,6 +9,8 @@ import io.micronaut.session.SessionIdGenerator;
 import tw.com.ehanlin.tomcatSessionSynchronizer.core.Synchronizer;
 
 import javax.inject.Singleton;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 @Singleton
 @Primary
@@ -24,12 +26,13 @@ public class MicronautSessionStoreSynchronizer extends InMemorySessionStore {
         return this._synchronizer;
     }
 
-    public MicronautSessionStoreSynchronizer(
+
+    private MicronautSessionStoreSynchronizer(
             SessionIdGenerator sessionIdGenerator,
             SessionConfiguration sessionConfiguration,
             ApplicationEventPublisher eventPublisher,
             Synchronizer synchronizer) {
-        super(sessionIdGenerator, sessionConfiguration, eventPublisher);
+        super(sessionIdGenerator ,sessionConfiguration, eventPublisher);
         this._synchronizer = synchronizer;
         this.sessionIdGenerator = sessionIdGenerator;
         this.sessionConfiguration = sessionConfiguration;
@@ -39,5 +42,13 @@ public class MicronautSessionStoreSynchronizer extends InMemorySessionStore {
     public InMemorySession newSession() {
         return new SynchronizableInMemorySession(sessionIdGenerator.generateId(), sessionConfiguration.getMaxInactiveInterval(),
                 this._synchronizer);
+    }
+
+    @Override
+    public CompletableFuture<Optional<InMemorySession>> findSession(String id) {
+        InMemorySession session = newSession();
+        return CompletableFuture.completedFuture(
+                Optional.ofNullable(session != null && !session.isExpired() ? session : null)
+        );
     }
 }
