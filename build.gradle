@@ -10,7 +10,7 @@ buildscript {
 subprojects{
 
     group 'tw.com.ehanlin'
-    version '0.0.3'
+    version '0.0.4'
 
     apply plugin: 'java'
     apply plugin: 'idea'
