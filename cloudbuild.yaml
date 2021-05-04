@@ -1,0 +1,13 @@
+steps:
+
+  - name: openjdk:11-jdk-slim
+    volumes:
+      - name: 'gradle'
+        path: '/root/.gradle'
+    args: ['./gradlew', '-Pversion=$TAG_NAME' ,'test']
+
+  - name: openjdk:11-jdk-slim
+    volumes:
+      - name: 'gradle'
+        path: '/root/.gradle'
+    args: ['./gradlew', '-Pversion=$TAG_NAME' ,'publish']

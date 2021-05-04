@@ -1,0 +1,4 @@
+steps:
+
+  - name: openjdk:11-jdk-slim
+    args: ['./gradlew' ,'test']
