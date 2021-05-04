@@ -5,12 +5,6 @@
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache
-.gradle
-/build/
-gradle-app.setting
-!gradle-wrapper.jar
-.gradletasknamecache
 .idea
 gradle
-gradlew
-gradlew.bat
+out
