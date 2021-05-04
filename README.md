@@ -15,5 +15,5 @@ dependencies {
 
 ## 佈署
 ```shell
-./gradlew -Pversion=1.0.0-SNAPSHOT publish
+./gradlew -Pversion=1.0.0 publish
 ```
