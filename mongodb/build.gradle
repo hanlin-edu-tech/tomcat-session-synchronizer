@@ -1,4 +1,4 @@
 dependencies{
     implementation project(":core")
-    implementation group: 'org.mongodb', name: 'mongo-java-driver', version: '3.12.8'
+    implementation group: 'org.mongodb', name: 'mongodb-driver-legacy', version: '4.3.3'
 }
