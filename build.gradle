@@ -1,13 +1,13 @@
 subprojects{
 
     group 'tw.com.ehanlin'
-    version '1.0.0'
+    version '1.0.0-teams103'
 
     apply plugin: 'java-library'
     apply plugin: 'maven-publish'
 
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 
     repositories {
         mavenCentral()

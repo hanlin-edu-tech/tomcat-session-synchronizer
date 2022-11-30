@@ -1,0 +1,8 @@
+dependencies{
+    implementation project(":core")
+    implementation project(":mongodb")
+    implementation project(":tomcat8")
+
+    implementation "org.apache.tomcat:tomcat-catalina:8.5.84"
+    implementation "org.mongodb:mongo-java-driver:3.12.11"
+}
